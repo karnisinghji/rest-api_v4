@@ -1,0 +1,7 @@
+{
+    "editor.formatOnSave": true,
+    "editor.fontSize": 16,
+    "explorer.fontSize": 16,
+  "terminal.integrated.fontSize": 16,
+  "window.zoomLevel": 1.4,
+}
