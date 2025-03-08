@@ -1,5 +1,5 @@
-import { Order } from '../../orders/entities/order.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Order } from '../../orders/entities/order.entity';
 
 @Entity()
 export class Customer {
@@ -21,6 +21,8 @@ export class Customer {
   @Column()
   mobile_number: string;
 
-  @OneToMany(() => Order, (order) => order.customer)
+  @OneToMany(() => Order, (order) => order.customer, { cascade: ['remove'] })
+
+  //@OneToMany(() => Order, (order) => order.customer)
   orders: Order[];
 }

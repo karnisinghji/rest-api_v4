@@ -8,19 +8,20 @@ import {
   Param,
   ParseIntPipe,
   Patch,
-  Post,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { CustomersService } from './customers.service';
-import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 
 @Controller('customers')
+@UseGuards(JwtAuthGuard)
 export class CustomersController {
   constructor(private readonly customersService: CustomersService) {}
 
-  @Post('/create')
+  /* @Post('/create')
   @HttpCode(HttpStatus.CREATED)
   @UsePipes(new ValidationPipe({ transform: true })) //Enables validation
   async createCustomer(@Body() createCustomerDto: CreateCustomerDto) {
@@ -32,8 +33,16 @@ export class CustomersController {
       data: customer,
     };
   }
+ */
 
-  @Get('/all')
+  //
+
+  //
+  //
+  //
+  //
+  //
+  @Get()
   @HttpCode(HttpStatus.OK) //  200 OK
   @UsePipes(new ValidationPipe({ transform: true })) //Enables validation
   async findAll() {
@@ -41,7 +50,36 @@ export class CustomersController {
     return { statusCode: HttpStatus.OK, data: customer };
   }
 
-  @Patch('update/:id')
+  //
+
+  //
+  //
+  //
+  //
+  //
+  //search by id
+
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  @UsePipes(new ValidationPipe({ transform: true })) //Enables validation
+  async findone(@Param('id') id: string) {
+    const customer = await this.customersService.findOneById(+id);
+    if (!customer) {
+      return {
+        statusCode: HttpStatus.NOT_FOUND,
+        message: 'Customer not found',
+      }; //  404 Not Found
+    }
+    return { statusCode: HttpStatus.OK, data: customer };
+  }
+
+  //
+
+  //
+
+  //
+  //
+  @Patch(':id')
   @HttpCode(HttpStatus.CREATED)
   @UsePipes(new ValidationPipe({ transform: true }))
   async updateCustomer(
@@ -59,23 +97,16 @@ export class CustomersController {
     };
   }
 
-  @Get('search/:id')
-  @HttpCode(HttpStatus.OK)
-  @UsePipes(new ValidationPipe({ transform: true })) //Enables validation
-  async findone(@Param('id') id: string) {
-    const customer = await this.customersService.findOne(+id);
-    if (!customer) {
-      return {
-        statusCode: HttpStatus.NOT_FOUND,
-        message: 'Customer not found',
-      }; //  404 Not Found
-    }
-    return { statusCode: HttpStatus.OK, data: customer };
-  }
+  //
 
-  @Delete('delete/:id')
+  //
+  //
+  //
+  //
+  //
+
+  @Delete(':id')
   async deleteCustomer(@Param('id', ParseIntPipe) id: string) {
-    console.log('Received ID:', id, 'Type:', typeof id);
     const deletedCustomer = await this.customersService.delete(+id);
     if (!this.deleteCustomer) {
       return {
