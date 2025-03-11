@@ -1,20 +1,23 @@
-FROM node:20
+# Use the latest Node.js LTS version
+FROM node:18
 
-WORKDIR  /shouryaveersingh/src/app
+# Set working directory inside container
+WORKDIR /usr/src/app
 
-COPY package.json ./
+# Copy only package.json and package-lock.json first
+COPY package*.json ./
 
+# Install dependencies
 RUN npm install
 
+# Copy the rest of the application
 COPY . .
 
+# Build the application (optional)
 RUN npm run build
 
-
+# Expose the app port (default NestJS port)
 EXPOSE 3000
 
-#CMD [ "npm" ,"run" ,"start"]
-#CMD ["node", "dist/main.js"]
+# Start the app
 CMD ["npm", "run", "start:prod"]
-
-

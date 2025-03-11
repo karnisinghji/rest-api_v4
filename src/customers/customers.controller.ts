@@ -12,10 +12,14 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/auth.guard';
+import { JwtAuthGuard } from '../auth/auth.guard';
 import { CustomersService } from './customers.service';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
+
+
+@ApiBearerAuth()        //Adds Swagger authentication button
 @Controller('customers')
 @UseGuards(JwtAuthGuard)
 export class CustomersController {
@@ -37,12 +41,10 @@ export class CustomersController {
 
   //
 
-  //
-  //
-  //
-  //
+  
   //
   @Get()
+  @ApiOperation({ summary: 'Get all customers profile' })
   @HttpCode(HttpStatus.OK) //  200 OK
   @UsePipes(new ValidationPipe({ transform: true })) //Enables validation
   async findAll() {
@@ -60,6 +62,7 @@ export class CustomersController {
   //search by id
 
   @Get(':id')
+  @ApiOperation({summary : 'Get customer profile by Id'})
   @HttpCode(HttpStatus.OK)
   @UsePipes(new ValidationPipe({ transform: true })) //Enables validation
   async findone(@Param('id') id: string) {
@@ -81,12 +84,13 @@ export class CustomersController {
   //
   @Patch(':id')
   @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({summary: 'Update or changed customer profile(except Id)'})
   @UsePipes(new ValidationPipe({ transform: true }))
   async updateCustomer(
     @Param('id') id: string,
     @Body() updateCustomerDto: UpdateCustomerDto,
   ) {
-    const updatedCustomer = this.customersService.update(
+    const updatedCustomer = await this.customersService.update(
       +id,
       updateCustomerDto,
     );
@@ -103,12 +107,13 @@ export class CustomersController {
   //
   //
   //
-  //
 
   @Delete(':id')
+  @UsePipes(new ValidationPipe({transform : true}))
+  @ApiOperation({summary :'Delete Customer profile using Id'})
   async deleteCustomer(@Param('id', ParseIntPipe) id: string) {
     const deletedCustomer = await this.customersService.delete(+id);
-    if (!this.deleteCustomer) {
+    if (!deletedCustomer) {
       return {
         statusCode: HttpStatus.NOT_FOUND,
         message: 'Selected customer not found ',

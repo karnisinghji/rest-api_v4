@@ -3,7 +3,7 @@ import {
   Entity,
   ManyToMany,
   ManyToOne,
-  PrimaryGeneratedColumn,
+  PrimaryGeneratedColumn,JoinTable,
 } from 'typeorm';
 import { Customer } from '../../customers/entities/customer.entity';
 import { Product } from '../../product/entities/product.entity';
@@ -26,7 +26,8 @@ export class Order {
 
   //@ManyToOne(() => Product, (product) => product.orders, { eager: true })
   @ManyToMany(() => Product, (product) => product.orders, { eager: true })
-  product: Product;
+  @JoinTable()
+  products: Product[];
 
   @Column()
   quantity: number;

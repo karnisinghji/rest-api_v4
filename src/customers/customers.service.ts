@@ -71,12 +71,13 @@ export class CustomersService {
 
   //
 
-  async delete(id: number): Promise<void> {
+  async delete(id: number): Promise<{ deleted: boolean }> {
     const res = await this.customerRepo.delete({ id });
-    if (res.affected === 0)
-      throw new NotFoundException(`Customer with ID ${id} not found`);
+    if (res.affected === 0) {
+      throw new NotFoundException(`Product with ID ${id} not found`);
+    }
+    return { deleted: true };
   }
-
   //
 
   //

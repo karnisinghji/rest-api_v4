@@ -15,7 +15,7 @@ export class Product {
   @Column()
   name: string;
 
-  /*   @Column({
+    @Column({
     type: 'decimal',
     precision: 10, // Maximum total digits
     scale: 2, // Digits after decimal point
@@ -23,14 +23,14 @@ export class Product {
       to: (value: number) => value.toFixed(2), // Ensure decimal format
       from: (value: string) => parseFloat(value), // Convert from string to float
     },
-  }) */
-  @Column()
+  }) 
+  //@Column()
   price: number;
 
   @Column()
   quantity: number;
 
-  @ManyToMany(() => Order, (order) => order.product)
+  @ManyToMany(() => Order, (order) => order.products)
   @JoinTable() // This is required in one of the entities
   orders: Order[];
 }

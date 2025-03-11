@@ -19,7 +19,7 @@ export class ProductService {
       ...createProductDto,
     });
 
-    console.log('product: ', product);
+    console.log('Creating product: ', product);
 
     return this.productRepo.save(product);
   }
@@ -34,9 +34,10 @@ export class ProductService {
   // read
 
   async findAllProduct(): Promise<Product[]> {
-    const product = this.productRepo.find();
-    if (!product) throw new NotFoundException(`product not found`);
-    return product;
+    const products = await this.productRepo.find();
+    if (!products.length) throw new NotFoundException(`No products found`);
+    //return products;
+    return products;
   }
 
   //
@@ -52,7 +53,10 @@ export class ProductService {
     id: number,
     updateProductDto: UpdateProductDto,
   ): Promise<Product> {
-    await this.productRepo.update(id, updateProductDto); // This does not return the updated entity
+    const updateResult = await this.productRepo.update(id, updateProductDto);
+    if (updateResult.affected === 0) {
+      throw new NotFoundException(`Product with #${id} not found`);
+    }
     const updatedProduct = await this.productRepo.findOne({ where: { id } });
     if (!updatedProduct) {
       throw new NotFoundException(`Product with #${id} not found`);
@@ -69,10 +73,12 @@ export class ProductService {
   //
 
   //delete
-  async remove(id: number): Promise<void> {
+  async remove(id: number): Promise<{ deleted: boolean }> {
     const result = await this.productRepo.delete(id);
-    if (result.affected == 0)
+    if (result.affected === 0) {
       throw new NotFoundException(`Product with ID ${id} not found`);
+    }
+    return { deleted: true };
   }
 
   //
@@ -86,8 +92,9 @@ export class ProductService {
 
   async findOne(id: number): Promise<Product> {
     const product = await this.productRepo.findOne({ where: { id } });
-    if (!product)
-      throw new NotFoundException(`Customer with ID ${id} not found`);
+    if (!product) {
+      throw new NotFoundException(`Product with ID ${id} not found`);
+    }
     return product;
   }
 }

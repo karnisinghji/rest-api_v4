@@ -8,16 +8,20 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('RestApi')
-    .setDescription('RestApi Description in NestJs')
+    .setTitle('NestJS RestApi')
+    .setDescription('API documentation for NestJS RestApi')
     .setVersion('1.0')
-    .addTag('RestApi')
+    .addBearerAuth()
+   // .addBasicAuth({ type: 'http', scheme: 'basic' }, 'basic')
+   // .addTag('RestApi')
     .build();
 
-  const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, documentFactory);
+  const document = () => SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
 
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true ,
+    transform: true,
+  }));
   app.useGlobalFilters(new HttpExceptionFilter());
 
   await app.listen(process.env.PORT ?? 3000);

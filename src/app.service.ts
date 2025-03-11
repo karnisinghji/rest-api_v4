@@ -5,8 +5,4 @@ export class AppService {
   getHello(): string {
     return 'Hello World from app service!';
   }
-
-  async getAbout(){
-    return 'This is about page from appService';
-  }
 }
