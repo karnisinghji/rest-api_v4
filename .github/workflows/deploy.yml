@@ -39,3 +39,13 @@ jobs:
             --region ${{ secrets.GCP_REGION }} \
             --allow-unauthenticated \
             --set-env-vars DB_HOST=34.126.210.143,DB_PORT=5432,DB_USERNAME=postgres,DB_PASSWORD=2000,DB_NAME=viratkohli
+      - name: Checkout Repository
+        uses: actions/checkout@v3v3
+        with:
+            fetch-depth: 0
+            token: ${{ secrets.GITHUB_TOKEN }}  # Use built-in GitHub token
+      - name: Set up Git
+        run: |
+              git config --global user.email "khushabhu@yahoo.com"
+              git config --global user.name "GitHub Actions"
+              git remote set-url origin https://github.com/karnisinghji/rest-api
