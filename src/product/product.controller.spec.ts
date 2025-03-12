@@ -1,4 +1,4 @@
-/* // import { Test, TestingModule } from '@nestjs/testing';
+// import { Test, TestingModule } from '@nestjs/testing';
 // import { CreateProductDto } from './dto/create-product.dto';
 // import { UpdateProductDto } from './dto/update-product.dto';
 // import { ProductController } from './product.controller';
@@ -207,6 +207,10 @@ describe('ProductController', () => {
     expect(controller).toBeDefined();
   });
 
+
+
+
+
   it('should create a product', async () => {
     const result = await controller.createProduct(dto);
 
@@ -222,6 +226,10 @@ describe('ProductController', () => {
     });
     expect(service.create).toHaveBeenCalledWith(dto);
   });
+
+
+
+
 
   it('should return all products', async () => {
     const mockResponse: any = {
@@ -250,6 +258,9 @@ describe('ProductController', () => {
     expect(service.findOne).toHaveBeenCalledWith(1);
   });
 
+
+
+/* 
   it('should update a product', async () => {
     const updateDto: UpdateProductDto = {
       name: 'Updated Product',
@@ -266,6 +277,10 @@ describe('ProductController', () => {
     });
     expect(service.update).toHaveBeenCalledWith(1, updateDto);
   });
+ */
+
+
+
 
   it('should delete a product', async () => {
     const result = await controller.deleteProduct('1');
@@ -278,4 +293,3 @@ describe('ProductController', () => {
     expect(service.remove).toHaveBeenCalledWith(1);
   });
 });
- */

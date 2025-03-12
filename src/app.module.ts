@@ -14,11 +14,11 @@ import { ProductModule } from './product/product.module';
     ConfigModule.forRoot(), // Load environment variables
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.DB_HOST || 'host.docker.internal',
+      host: process.env.DB_HOST || '34.126.210.143',
       port: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 5432,
       username: process.env.DB_USERNAME || 'postgres',
-      password: process.env.DB_PASSWORD || 'postgres',
-      database: process.env.DB_NAME || 'restapi',
+      password: process.env.DB_PASSWORD || '2000',
+      database: process.env.DB_NAME || 'viratkohli',
       autoLoadEntities: true,
       synchronize: true,
       entities: [Customer, Product, Order],

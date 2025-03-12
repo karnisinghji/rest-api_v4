@@ -1,10 +1,10 @@
 import psycopg2
 import os
 
-DB_HOST = os.getenv("DB_HOST", "localhost")
-DB_NAME = os.getenv("DB_NAME", "restapi")
+DB_HOST = os.getenv("DB_HOST", "34.126.210.143")
+DB_NAME = os.getenv("DB_NAME", "viratkohli")
 DB_USER = os.getenv("DB_USER", "postgres")
-DB_PASS = os.getenv("DB_PASS", "postgres")
+DB_PASS = os.getenv("DB_PASS", "2000")
 DB_PORT = os.getenv("DB_PORT", 5432)
 
 def test_database_connection():

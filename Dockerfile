@@ -16,8 +16,10 @@ COPY . .
 # Build the application (optional)
 RUN npm run build
 
+ENV PORT =8080
+
 # Expose the app port (default NestJS port)
-EXPOSE 3000
+EXPOSE 8080
 
 # Start the app
-CMD ["npm", "run", "start:prod"]
+ENTRYPOINT ["npm", "run", "start:prod"]
